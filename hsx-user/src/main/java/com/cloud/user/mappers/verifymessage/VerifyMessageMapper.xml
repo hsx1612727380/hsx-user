@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.user.impl.mapper.verifymessage.VerifyMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.user.beans.bean.verifymessage.VerifyMessage" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="VERIFY_CODE" property="verifyCode" jdbcType="VARCHAR" />
+    <result column="RECEIVE_USER_ID" property="receiveUserId" jdbcType="BIGINT" />
+    <result column="MESSAGE_STR" property="messageStr" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, MOBILE, TYPE, STATUS, VERIFY_CODE, RECEIVE_USER_ID, MESSAGE_STR, UPDATE_TIME, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CDA_VERIFY_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from CDA_VERIFY_MESSAGE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CDA_VERIFY_MESSAGE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessageExample" >
+    delete from CDA_VERIFY_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessage" >
+    insert into CDA_VERIFY_MESSAGE (ID, MOBILE, TYPE, 
+      STATUS, VERIFY_CODE, RECEIVE_USER_ID, 
+      MESSAGE_STR, UPDATE_TIME, CREATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{verifyCode,jdbcType=VARCHAR}, #{receiveUserId,jdbcType=BIGINT}, 
+      #{messageStr,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessage" >
+    insert into CDA_VERIFY_MESSAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE,
+      </if>
+      <if test="receiveUserId != null" >
+        RECEIVE_USER_ID,
+      </if>
+      <if test="messageStr != null" >
+        MESSAGE_STR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="messageStr != null" >
+        #{messageStr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessageExample" resultType="java.lang.Integer" >
+    select count(*) from CDA_VERIFY_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CDA_VERIFY_MESSAGE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.mobile != null" >
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.verifyCode != null" >
+        VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveUserId != null" >
+        RECEIVE_USER_ID = #{record.receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.messageStr != null" >
+        MESSAGE_STR = #{record.messageStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CDA_VERIFY_MESSAGE
+    set ID = #{record.id,jdbcType=BIGINT},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      RECEIVE_USER_ID = #{record.receiveUserId,jdbcType=BIGINT},
+      MESSAGE_STR = #{record.messageStr,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessage" >
+    update CDA_VERIFY_MESSAGE
+    <set >
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        RECEIVE_USER_ID = #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="messageStr != null" >
+        MESSAGE_STR = #{messageStr,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.user.beans.bean.verifymessage.VerifyMessage" >
+    update CDA_VERIFY_MESSAGE
+    set MOBILE = #{mobile,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=INTEGER},
+      VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      RECEIVE_USER_ID = #{receiveUserId,jdbcType=BIGINT},
+      MESSAGE_STR = #{messageStr,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

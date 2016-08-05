@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.user.impl.mapper.user.UserMapper">
+	<resultMap id="BaseResultMap" type="com.cloud.user.beans.bean.user.User">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="USER_ACCOUNT" property="userAccount" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_PASSWORD" property="userPassword"
+			jdbcType="VARCHAR" />
+		<result column="USER_NICKNAME" property="userNickname"
+			jdbcType="VARCHAR" />
+		<result column="USER_REG_TYPE" property="userRegType" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+		<result column="USER_PIC" property="userPic" jdbcType="VARCHAR" />
+		<result column="USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+		<result column="USER_SEX" property="userSex" jdbcType="INTEGER" />
+		<result column="USER_BIRTHDAY" property="userBirthday"
+			jdbcType="TIMESTAMP" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, USER_ACCOUNT, USER_NAME, USER_PASSWORD, USER_NICKNAME,
+		USER_REG_TYPE,
+		USER_TYPE,
+		STATUS, EMAIL, ID_CARD, USER_PIC, USER_MOBILE,
+		USER_SEX, USER_BIRTHDAY,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.cloud.user.beans.bean.user.UserExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from CDA_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		CDA_USER
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.cloud.user.beans.bean.user.UserExample">
+		delete from CDA_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.cloud.user.beans.bean.user.User">
+		insert into CDA_USER (ID,
+		USER_ACCOUNT, USER_NAME,
+		USER_PASSWORD, USER_NICKNAME, USER_REG_TYPE,
+		USER_TYPE, STATUS, EMAIL,
+		ID_CARD, USER_PIC, USER_MOBILE,
+		USER_SEX,
+		USER_BIRTHDAY, CREATE_TIME,
+		UPDATE_TIME)
+		values (#{id,jdbcType=BIGINT},
+		#{userAccount,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{userPassword,jdbcType=VARCHAR}, #{userNickname,jdbcType=VARCHAR},
+		#{userRegType,jdbcType=VARCHAR},
+		#{userType,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
+		#{email,jdbcType=VARCHAR},
+		#{idCard,jdbcType=VARCHAR}, #{userPic,jdbcType=VARCHAR},
+		#{userMobile,jdbcType=VARCHAR},
+		#{userSex,jdbcType=INTEGER},
+		#{userBirthday,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cloud.user.beans.bean.user.User">
+		insert into CDA_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userAccount != null">
+				USER_ACCOUNT,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD,
+			</if>
+			<if test="userNickname != null">
+				USER_NICKNAME,
+			</if>
+			<if test="userRegType != null">
+				USER_REG_TYPE,
+			</if>
+			<if test="userType != null">
+				USER_TYPE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="idCard != null">
+				ID_CARD,
+			</if>
+			<if test="userPic != null">
+				USER_PIC,
+			</if>
+			<if test="userMobile != null">
+				USER_MOBILE,
+			</if>
+			<if test="userSex != null">
+				USER_SEX,
+			</if>
+			<if test="userBirthday != null">
+				USER_BIRTHDAY,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userAccount != null">
+				#{userAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPassword != null">
+				#{userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="userNickname != null">
+				#{userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="userRegType != null">
+				#{userRegType,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="idCard != null">
+				#{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="userPic != null">
+				#{userPic,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null">
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="userBirthday != null">
+				#{userBirthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.cloud.user.beans.bean.user.UserExample"
+		resultType="java.lang.Integer">
+		select count(*) from CDA_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update CDA_USER
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userAccount != null">
+				USER_ACCOUNT = #{record.userAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userName != null">
+				USER_NAME = #{record.userName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPassword != null">
+				USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userNickname != null">
+				USER_NICKNAME = #{record.userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userRegType != null">
+				USER_REG_TYPE = #{record.userRegType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userType != null">
+				USER_TYPE = #{record.userType,jdbcType=INTEGER},
+			</if>
+			<if test="record.status != null">
+				STATUS = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.email != null">
+				EMAIL = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.idCard != null">
+				ID_CARD = #{record.idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPic != null">
+				USER_PIC = #{record.userPic,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userMobile != null">
+				USER_MOBILE = #{record.userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userSex != null">
+				USER_SEX = #{record.userSex,jdbcType=INTEGER},
+			</if>
+			<if test="record.userBirthday != null">
+				USER_BIRTHDAY =
+				#{record.userBirthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update CDA_USER
+		set ID = #{record.id,jdbcType=BIGINT},
+		USER_ACCOUNT =
+		#{record.userAccount,jdbcType=VARCHAR},
+		USER_NAME =
+		#{record.userName,jdbcType=VARCHAR},
+		USER_PASSWORD =
+		#{record.userPassword,jdbcType=VARCHAR},
+		USER_NICKNAME =
+		#{record.userNickname,jdbcType=VARCHAR},
+		USER_REG_TYPE =
+		#{record.userRegType,jdbcType=VARCHAR},
+		USER_TYPE =
+		#{record.userType,jdbcType=INTEGER},
+		STATUS =
+		#{record.status,jdbcType=INTEGER},
+		EMAIL =
+		#{record.email,jdbcType=VARCHAR},
+		ID_CARD =
+		#{record.idCard,jdbcType=VARCHAR},
+		USER_PIC =
+		#{record.userPic,jdbcType=VARCHAR},
+		USER_MOBILE =
+		#{record.userMobile,jdbcType=VARCHAR},
+		USER_SEX =
+		#{record.userSex,jdbcType=INTEGER},
+		USER_BIRTHDAY =
+		#{record.userBirthday,jdbcType=TIMESTAMP},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cloud.user.beans.bean.user.User">
+		update CDA_USER
+		<set>
+			<if test="userAccount != null">
+				USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="userNickname != null">
+				USER_NICKNAME = #{userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="userRegType != null">
+				USER_REG_TYPE = #{userRegType,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USER_TYPE = #{userType,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="idCard != null">
+				ID_CARD = #{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="userPic != null">
+				USER_PIC = #{userPic,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null">
+				USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				USER_SEX = #{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="userBirthday != null">
+				USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cloud.user.beans.bean.user.User">
+		update CDA_USER
+		set USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
+		USER_NAME =
+		#{userName,jdbcType=VARCHAR},
+		USER_PASSWORD =
+		#{userPassword,jdbcType=VARCHAR},
+		USER_NICKNAME =
+		#{userNickname,jdbcType=VARCHAR},
+		USER_REG_TYPE =
+		#{userRegType,jdbcType=VARCHAR},
+		USER_TYPE =
+		#{userType,jdbcType=INTEGER},
+		STATUS = #{status,jdbcType=INTEGER},
+		EMAIL = #{email,jdbcType=VARCHAR},
+		ID_CARD =
+		#{idCard,jdbcType=VARCHAR},
+		USER_PIC = #{userPic,jdbcType=VARCHAR},
+		USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+		USER_SEX =
+		#{userSex,jdbcType=INTEGER},
+		USER_BIRTHDAY =
+		#{userBirthday,jdbcType=TIMESTAMP},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+
+
+	<!-- sql片段 -->
+	<sql id="User_Where_Clause">
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="userAccount != null">
+				and USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				and USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPassword != null">
+				and USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="userNickname != null">
+				and USER_NICKNAME = #{userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="userRegType != null">
+				and USER_REG_TYPE = #{userRegType,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				and USER_TYPE = #{userType,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				and STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				and EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="idCard != null">
+				and ID_CARD = #{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="userPic != null">
+				and USER_PIC = #{userPic,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null">
+				and USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				and USER_SEX = #{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="userBirthday != null">
+				and USER_BIRTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</where>
+	</sql>
+
+
+	<!-- 遍历用户好友IDS的sql片段 -->
+	<sql id="query_userFriendIds_where">
+		<where>
+			<if test="ids != null">
+				<foreach collection="ids" item="user_id" open="AND (" close=")"
+					separator="OR">
+					id = #{user_id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+
+	<!-- 模糊查询sql片段 -->
+	<sql id="page_user_where">
+		<where>
+			<if test="userName != null">
+				and USER_NAME like '%${userName}%'
+			</if>
+			<if test="userMobile != null">
+				and USER_MOBILE like '%${userMobile}%'
+			</if>
+		</where>
+	</sql>
+
+
+	<!-- 遍历用户IDS的sql片段 -->
+	<sql id="query_userIds_where">
+		<where>
+			<if test="ids != null">
+				<foreach collection="ids" item="user_id" open="AND (" close=")"
+					separator="OR">
+					id = #{user_id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+
+	<!-- 修改用户密码 -->
+	<update id="updateUserPassword" parameterType="com.cloud.user.beans.bean.user.User">
+		update CDA_USER
+		set USER_PASSWORD=#{userPassword} where ID=#{id}
+	</update>
+
+
+	<!-- 修改用户的昵称 -->
+	<update id="updateUserNickname" parameterType="com.cloud.user.beans.bean.user.User">
+		update CDA_USER
+		set USER_NICKNAME = #{userNickname} where ID = #{id}
+	</update>
+
+
+	<!-- 分页查询用户信息 -->
+	<select id="selectByPage" parameterType="com.cloud.user.beans.bean.user.User"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER
+		<include refid="page_user_where" />
+		order by ID
+	</select>
+
+
+	<!-- 查询用户的总数 -->
+	<select id="countByUser" parameterType="com.cloud.user.beans.bean.user.User"
+		resultType="Integer">
+		select count(*) from CDA_USER
+		<include refid="page_user_where" />
+	</select>
+
+
+	<!-- 根据用户的手机号查询用户 -->
+	<select id="selectUserByPhone" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER where USER_MOBILE = #{userMobile}
+	</select>
+
+
+	<!-- 根据用户邮箱查找用户 -->
+	<select id="selectUserByEmail" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER where EMAIL = #{email}
+	</select>
+
+
+	<!-- 根据用户好友的众多的ids查询好友 -->
+	<select id="selectListByUserFriendQueryVoPage"
+		parameterType="com.cloud.user.beans.vo.userfriend.UserFriendQueryVo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER
+		<include refid="query_userFriendIds_where" />
+	</select>
+
+
+	<!-- 根据众多的ids查询用户 -->
+	<select id="selectUserQueryVo" parameterType="com.cloud.user.beans.vo.user.UserQueryVo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER
+		<include refid="query_userIds_where" />
+	</select>
+	
+	
+	<!-- 显示用户列表 -->
+	<select id="selectUser" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from CDA_USER
+	</select>
+
+</mapper>

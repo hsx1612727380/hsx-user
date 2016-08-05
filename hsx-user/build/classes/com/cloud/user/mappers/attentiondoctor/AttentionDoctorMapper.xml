@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.cloud.user.impl.mapper.attentiondoctor.AttentionDoctorMapper">
+	<resultMap id="BaseResultMap"
+		type="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="USER_ID" property="userId" jdbcType="BIGINT" />
+		<result column="DOCTOR_ID" property="doctorId" jdbcType="BIGINT" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="IS_ESPECILLY" property="isEspecilly" jdbcType="INTEGER" />
+		<result column="SORT_NUM" property="sortNum" jdbcType="INTEGER" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, USER_ID, DOCTOR_ID, STATUS, IS_ESPECILLY, SORT_NUM, CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctorExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from CDA_ATTENTION_DOCTOR
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_ATTENTION_DOCTOR
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from CDA_ATTENTION_DOCTOR
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctorExample">
+		delete from CDA_ATTENTION_DOCTOR
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor">
+		insert into CDA_ATTENTION_DOCTOR (ID, USER_ID, DOCTOR_ID,
+		STATUS, IS_ESPECILLY, SORT_NUM,
+		CREATE_TIME, UPDATE_TIME)
+		values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+		#{doctorId,jdbcType=BIGINT},
+		#{status,jdbcType=INTEGER}, #{isEspecilly,jdbcType=INTEGER}, #{sortNum,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor">
+		insert into CDA_ATTENTION_DOCTOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="doctorId != null">
+				DOCTOR_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="isEspecilly != null">
+				IS_ESPECILLY,
+			</if>
+			<if test="sortNum != null">
+				SORT_NUM,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="doctorId != null">
+				#{doctorId,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="isEspecilly != null">
+				#{isEspecilly,jdbcType=INTEGER},
+			</if>
+			<if test="sortNum != null">
+				#{sortNum,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctorExample"
+		resultType="java.lang.Integer">
+		select count(*) from CDA_ATTENTION_DOCTOR
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update CDA_ATTENTION_DOCTOR
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				USER_ID = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.doctorId != null">
+				DOCTOR_ID = #{record.doctorId,jdbcType=BIGINT},
+			</if>
+			<if test="record.status != null">
+				STATUS = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.isEspecilly != null">
+				IS_ESPECILLY = #{record.isEspecilly,jdbcType=INTEGER},
+			</if>
+			<if test="record.sortNum != null">
+				SORT_NUM = #{record.sortNum,jdbcType=INTEGER},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update CDA_ATTENTION_DOCTOR
+		set ID = #{record.id,jdbcType=BIGINT},
+		USER_ID = #{record.userId,jdbcType=BIGINT},
+		DOCTOR_ID = #{record.doctorId,jdbcType=BIGINT},
+		STATUS = #{record.status,jdbcType=INTEGER},
+		IS_ESPECILLY = #{record.isEspecilly,jdbcType=INTEGER},
+		SORT_NUM = #{record.sortNum,jdbcType=INTEGER},
+		CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor">
+		update CDA_ATTENTION_DOCTOR
+		<set>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="doctorId != null">
+				DOCTOR_ID = #{doctorId,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="isEspecilly != null">
+				IS_ESPECILLY = #{isEspecilly,jdbcType=INTEGER},
+			</if>
+			<if test="sortNum != null">
+				SORT_NUM = #{sortNum,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor">
+		update CDA_ATTENTION_DOCTOR
+		set USER_ID = #{userId,jdbcType=BIGINT},
+		DOCTOR_ID = #{doctorId,jdbcType=BIGINT},
+		STATUS = #{status,jdbcType=INTEGER},
+		IS_ESPECILLY = #{isEspecilly,jdbcType=INTEGER},
+		SORT_NUM = #{sortNum,jdbcType=INTEGER},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+
+
+	<!-- 根据用户的ID和医生的ID的SQL片段 -->
+	<sql id="query_userId_doctorId_where">
+		<where>
+			<if test="userId != null">
+				AND USER_ID = #{userId}
+			</if>
+			<if test="doctorId != null">
+				AND DOCTOR_ID = #{doctorId}
+			</if>
+		</where>
+	</sql>
+
+
+	<!-- 根据用户的Id和医生的ID查询用户是否关注医生 -->
+	<select id="selectAttentionDoctorByUserIdAndDoctorId"
+		parameterType="com.cloud.user.beans.bean.attentiondoctor.AttentionDoctor"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM CDA_ATTENTION_DOCTOR
+		<include refid="query_userId_doctorId_where" />
+	</select>
+
+
+</mapper>

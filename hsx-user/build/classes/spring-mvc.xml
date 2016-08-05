@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+	
+	<!-- 配置bean注解路径 -->
+	<mvc:annotation-driven/>
+	
+	 <!-- spring拦截器 -->
+<!-- 	<mvc:interceptors>
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/**" />
+	 		<mvc:exclude-mapping path="/admin/ace/**"/>
+	 			<mvc:exclude-mapping path="/login/execute"/>
+	 		<bean id="loginInterceptor" class="com.cloud.user.interceptor.LoginInterceptor"/>
+	 	</mvc:interceptor>
+	 </mvc:interceptors> -->
+	
+	<context:component-scan base-package="com.cloud.user.web.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>	
+	
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	 </bean>
+	 
+	 <!-- 解决文件上传时候不能获取参数问题 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600" /> <!-- 最大上传size,100M -->
+		<property name="maxInMemorySize" value="5120" />    <!-- 单个文件最大：5M -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	 
+	  
+	
+</beans>

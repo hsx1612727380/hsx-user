@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.user.impl.mapper.userblack.UserBlackMapper">
+	<resultMap id="BaseResultMap" type="com.cloud.user.beans.bean.userblack.UserBlack">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="USER_ID" property="userId" jdbcType="BIGINT" />
+		<result column="CREATE_ID" property="createId" jdbcType="BIGINT" />
+		<result column="UPDATE_ID" property="updateId" jdbcType="BIGINT" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="REASON" property="reason" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, USER_ID, CREATE_ID, UPDATE_ID, STATUS, REASON,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.cloud.user.beans.bean.userblack.UserBlackExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from CDA_USER_BLACK_LIST
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from CDA_USER_BLACK_LIST
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		CDA_USER_BLACK_LIST
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.cloud.user.beans.bean.userblack.UserBlackExample">
+		delete from CDA_USER_BLACK_LIST
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.cloud.user.beans.bean.userblack.UserBlack">
+		insert into
+		CDA_USER_BLACK_LIST (ID, USER_ID, CREATE_ID,
+		UPDATE_ID, STATUS, REASON,
+		CREATE_TIME, UPDATE_TIME)
+		values (#{id,jdbcType=BIGINT},
+		#{userId,jdbcType=BIGINT},
+		#{createId,jdbcType=BIGINT},
+		#{updateId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER},
+		#{reason,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cloud.user.beans.bean.userblack.UserBlack">
+		insert into CDA_USER_BLACK_LIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="createId != null">
+				CREATE_ID,
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="reason != null">
+				REASON,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="updateId != null">
+				#{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="reason != null">
+				#{reason,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.cloud.user.beans.bean.userblack.UserBlackExample"
+		resultType="java.lang.Integer">
+		select count(*) from CDA_USER_BLACK_LIST
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update CDA_USER_BLACK_LIST
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				USER_ID = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.createId != null">
+				CREATE_ID = #{record.createId,jdbcType=BIGINT},
+			</if>
+			<if test="record.updateId != null">
+				UPDATE_ID = #{record.updateId,jdbcType=BIGINT},
+			</if>
+			<if test="record.status != null">
+				STATUS = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.reason != null">
+				REASON = #{record.reason,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update CDA_USER_BLACK_LIST
+		set ID = #{record.id,jdbcType=BIGINT},
+		USER_ID = #{record.userId,jdbcType=BIGINT},
+		CREATE_ID =
+		#{record.createId,jdbcType=BIGINT},
+		UPDATE_ID =
+		#{record.updateId,jdbcType=BIGINT},
+		STATUS =
+		#{record.status,jdbcType=INTEGER},
+		REASON =
+		#{record.reason,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cloud.user.beans.bean.userblack.UserBlack">
+		update CDA_USER_BLACK_LIST
+		<set>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="createId != null">
+				CREATE_ID = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="updateId != null">
+				UPDATE_ID = #{updateId,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="reason != null">
+				REASON = #{reason,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cloud.user.beans.bean.userblack.UserBlack">
+		update
+		CDA_USER_BLACK_LIST
+		set USER_ID = #{userId,jdbcType=BIGINT},
+		CREATE_ID =
+		#{createId,jdbcType=BIGINT},
+		UPDATE_ID = #{updateId,jdbcType=BIGINT},
+		STATUS = #{status,jdbcType=INTEGER},
+		REASON =
+		#{reason,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+
+
+	<!-- 遍历用户黑名单IDS的sql片段 -->
+	<sql id="query_userBlackIds_where">
+		<where>
+			<if test="ids != null">
+				<foreach collection="ids" item="userblack_id" open="AND ("
+					close=")" separator="OR">
+					id = #{userblack_id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+
+	<!-- 根据用户的Id查询该用户是否在黑名单表中 -->
+	<select id="selectUserBlacksByUserId" parameterType="Long"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM CDA_USER_BLACK_LIST WHERE USER_ID = #{userId}
+	</select>
+
+
+	<!-- 查询黑名单中确定用户为黑户的用户 -->
+	<select id="selectUserBlackByStatus" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM CDA_USER_BLACK_LIST WHERE STATUS = 1
+	</select>
+
+
+	<!-- 显示黑名单列表 -->
+	<select id="selectUserBlack" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM CDA_USER_BLACK_LIST
+	</select>
+
+
+	<!-- 根据众多的ids查询黑名单 -->
+	<select id="selectUserBlackVo" parameterType="com.cloud.user.beans.vo.userblack.UserBlackQueryVo"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM CDA_USER_BLACK_LIST
+		<include refid="query_userBlackIds_where" />
+	</select>
+
+</mapper>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.user.impl.mapper.userfriend.UserFriendMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.user.beans.bean.userfriend.UserFriend" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="FRIEND_USER_ID" property="friendUserId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="REMARK_NAME" property="remarkName" jdbcType="VARCHAR" />
+    <result column="FRIEND_NICKNAME" property="friendNickname" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, FRIEND_USER_ID, STATUS, REMARK_NAME, FRIEND_NICKNAME, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cloud.user.beans.bean.userfriend.UserFriendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CDA_USER_FRIEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from CDA_USER_FRIEND
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CDA_USER_FRIEND
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloud.user.beans.bean.userfriend.UserFriendExample" >
+    delete from CDA_USER_FRIEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" >
+    insert into CDA_USER_FRIEND (ID, USER_ID, FRIEND_USER_ID, 
+      STATUS, REMARK_NAME, FRIEND_NICKNAME, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{friendUserId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{remarkName,jdbcType=VARCHAR}, #{friendNickname,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" >
+    insert into CDA_USER_FRIEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="friendUserId != null" >
+        FRIEND_USER_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remarkName != null" >
+        REMARK_NAME,
+      </if>
+      <if test="friendNickname != null" >
+        FRIEND_NICKNAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="friendUserId != null" >
+        #{friendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarkName != null" >
+        #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendNickname != null" >
+        #{friendNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.user.beans.bean.userfriend.UserFriendExample" resultType="java.lang.Integer" >
+    select count(*) from CDA_USER_FRIEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CDA_USER_FRIEND
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.friendUserId != null" >
+        FRIEND_USER_ID = #{record.friendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarkName != null" >
+        REMARK_NAME = #{record.remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendNickname != null" >
+        FRIEND_NICKNAME = #{record.friendNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CDA_USER_FRIEND
+    set ID = #{record.id,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      FRIEND_USER_ID = #{record.friendUserId,jdbcType=BIGINT},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      REMARK_NAME = #{record.remarkName,jdbcType=VARCHAR},
+      FRIEND_NICKNAME = #{record.friendNickname,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" >
+    update CDA_USER_FRIEND
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="friendUserId != null" >
+        FRIEND_USER_ID = #{friendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarkName != null" >
+        REMARK_NAME = #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendNickname != null" >
+        FRIEND_NICKNAME = #{friendNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" >
+    update CDA_USER_FRIEND
+    set USER_ID = #{userId,jdbcType=BIGINT},
+      FRIEND_USER_ID = #{friendUserId,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=INTEGER},
+      REMARK_NAME = #{remarkName,jdbcType=VARCHAR},
+      FRIEND_NICKNAME = #{friendNickname,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <!-- 根据用户和用户好友的Id的SQL片段 -->
+  <sql id="select_user_friend_where">
+  	<where>
+  		<if test="userId != null">
+  			AND USER_ID = #{userId}
+  		</if>
+  		<if test="friendUserId != null">
+  			AND FRIEND_USER_ID = #{friendUserId}
+  		</if>
+  	</where>
+  </sql>
+  
+  
+  <!-- 根据用户好友的备注名称或昵称 的 模糊查询sql片段 -->
+  <sql id="page_userFriend_userIdAndName_where">
+  	<where>
+  		<if test="remarkName != null">
+  			and REMARK_NAME like '%${remarkName}%'
+  		</if>
+  		<if test="friendNickname != null">
+  			and FRIEND_NICKNAME like '%${friendNickname}%'
+  		</if>
+  	</where>
+  </sql>
+  
+  
+  <!-- 根据用户好友的备注名称或昵称 的 模糊查询sql片段 -->
+  <sql id="page_userFriend_userIdAndfriendUserId_where">
+  	<where>
+  		<if test="userId != null">
+  			and USER_ID = #{userId}
+  		</if>
+  		<if test="friendUserId != null">
+  			and FRIEND_USER_ID = #{friendUserId}
+  		</if>
+  	</where>
+  </sql>
+  
+  
+  <!-- 根据用户好友的ID查询用户好友 -->
+  <select id="selectUserFriendByFriendUserId" parameterType="Long" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from CDA_USER_FRIEND where FRIEND_USER_ID = #{friendUserId}
+  </select>
+  
+  
+  <!-- 根据用户和用户好友的Id查询用户 -->
+  <select id="selectByUserIdAndFriendId" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List"/> FROM CDA_USER_FRIEND <include refid="select_user_friend_where"/>
+  </select>
+  
+  
+  <!-- 根据ID删除好友 -->
+  <delete id="deleteUserFriendByFriendUserId" parameterType="Long">
+  	DELETE FROM CDA_USER_FRIEND WHERE ID = #{id}
+  </delete>
+  
+  
+  <!-- 根据用户好友的备注名称或昵称查询UserFriend好友信息 -->
+  <select id="selectUserFriendByIdAndName" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from CDA_USER_FRIEND 
+  	<include refid="page_userFriend_userIdAndName_where"/>
+  </select>
+  
+  
+  <!-- 根据用户的ID查询UserFriend所有好友信息 -->
+  <select id="selectUserFriendByUserId" parameterType="Long" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from CDA_USER_FRIEND where USER_ID = #{userId}
+  </select>
+  
+  
+  <!-- 根据用户ID和用户好友ID查询 -->
+  <select id="selectUserFriendByUserIdAndFriendUserId" parameterType="com.cloud.user.beans.vo.userfriend.UserFriendQueryVo" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from CDA_USER_FRIEND <include refid="page_userFriend_userIdAndfriendUserId_where"/>
+  </select>
+  
+  
+  <!-- 修改用户好友的备注名称 -->
+  <update id="updateUserFriendRemarkName" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend">
+  	update CDA_USER_FRIEND set REMARK_NAME = #{remarkName} where ID = #{id}
+  </update>
+  
+  
+  <!-- 修改用户好的状态 -->	
+  <update id="updateUserFriendStatus" parameterType="com.cloud.user.beans.bean.userfriend.UserFriend">
+  	update CDA_USER_FRIEND set STATUS = #{status} where ID = #{id}
+  </update>
+  
+</mapper>

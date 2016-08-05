@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<settings>
+     <setting name="logImpl" value="LOG4J2"/>
+</settings>
+
+<mappers>
+	<mapper resource="com/cloud/user/mappers/user/UserInfoMapper.xml"/>
+	<mapper resource="com/cloud/user/mappers/user/UserMapper.xml"/>
+
+	<!-- group -->
+	<mapper resource="com/cloud/user/mappers/usergroup/GroupMapper.xml"/>
+	<mapper resource="com/cloud/user/mappers/usergroup/UserGroupMapper.xml"/>
+
+
+	<mapper resource="com/cloud/user/mappers/userfriend/UserFriendMapper.xml"/>
+	
+	<mapper resource="com/cloud/user/mappers/verifymessage/VerifyMessageMapper.xml"/>
+	
+	<mapper resource="com/cloud/user/mappers/userblack/UserBlackMapper.xml"/>
+	
+	<mapper resource="com/cloud/user/mappers/attentiondoctor/AttentionDoctorMapper.xml" />
+
+</mappers>
+</configuration>

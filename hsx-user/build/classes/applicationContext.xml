@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://code.alibabatech.com/schema/dubbo
+http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 配置Spring-Mybatis模式：开始 -->
+
+	<!-- 配置数据库连接池：使用dbcp作为链接 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="username" value="cloud_dev" />
+		<property name="password" value="123456" />
+		<property name="url" value="jdbc:mysql://192.168.1.201:3306/cloud_assistant?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="maxActive" value="100" />
+		<property name="initialSize" value="10" />
+		<property name="maxIdle" value="50" />
+		<property name="maxWait" value="60000" />
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="180" />
+		<!-- <property name="autocommit" value="0"/> -->
+		<!-- <property name="defaultAutoCommit" value="false"></property> -->
+	</bean>
+
+
+	<!-- 定义MyBatis的sessionFactory 将连接池注入到Spring的SessionFactory中 -->
+	<!-- 配置文件模式 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:sqlmap-config.xml"/>
+	</bean>
+
+	<!-- MyBathis相关Mapper注入 即dao持久层自动注入 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" autowire="byName">
+		<property name="basePackage" value="com.cloud.user.impl.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+
+
+	<!--  配置局部事务管理器，使用DataSourceTransactionManager类 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!--  配置事务增强处理bean,指定事物管理器 -->
+	<tx:advice id="tx-advice" transaction-manager="transactionManager">
+		<!-- 用于配置详细的事物语义 -->
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>  
+			<tx:method name="delete*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*"  propagation="REQUIRED" rollback-for="Exception"/>			
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置事务参与的类 -->
+	<aop:config expose-proxy="true">													
+		<aop:pointcut id="txPointcut" expression="execution(* com.cloud.user.impl.service.*..*(..))" />
+		<aop:advisor pointcut-ref="txPointcut" advice-ref="tx-advice" />
+	</aop:config>
+	
+	<dubbo:application name="cloud-user" />
+	
+    <!-- 使用zookeeper注册中心暴露服务地址 即zookeeper的所在服务器ip地址和端口号 -->  
+	<dubbo:registry protocol="zookeeper" address="10.1.125.81:2181,10.1.125.82:2181,192.168.1.201:2181"/>
+    <!-- 用dubbo协议在20880端口暴露服务 -->  
+    <dubbo:protocol name="dubbo" port="20880" serialization="hessian2"/>  
+	<!-- 扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类 -->
+	<!-- 	<dubbo:annotation package="com.cloud.user.*" /> -->
+	<!-- 此处添加接口暴露 -->
+    <!-- <dubbo:service ref="userService" interface="com.cloud.user.core.service.user.UserService" timeout="30000" version="1.0.0" group="user" /> -->
+
+	<!-- 配置自动注入 不注入 Controller注解的bean -->
+	<context:component-scan base-package="com.cloud.user.*" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	
+</beans>
